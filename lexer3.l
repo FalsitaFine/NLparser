@@ -9,8 +9,8 @@ letter   [A-Za-z]
 digit    [0-9]
 
 noun_prototype ("rabbit")|("I")
-verb_prototype "am"
-adj "happy"
+verb_prototype ("am")|("jump")
+adj ("happy")|("a") 
 adv "highly"
 
 verb ({verb_prototype})("s" | "ing")*
