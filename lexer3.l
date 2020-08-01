@@ -82,8 +82,11 @@ adv_15 ("ultimately")|("finally")|("presently")|("nowadays")|("now")|("now")|("n
 adv {adv_0}|{adv_1}|{adv_2}|{adv_3}|{adv_4}|{adv_5}|{adv_6}|{adv_7}|{adv_8}|{adv_9}|{adv_10}|{adv_11}|{adv_12}|{adv_13}|{adv_14}|{adv_15}
 
 
-verb ({verb_prototype})("s" | "ing")*
-noun ({noun_prototype})("s")*
+suffix_v ("s")|("ing")
+suffix_n ("s")
+
+verb ({verb_prototype})({suffix_v})*
+noun {noun_prototype}({suffix_n})*
 
 ws       [ \t]+
 newline  "\n"
@@ -102,8 +105,8 @@ error    .
 %%
 
 {ws}            ;   /* do nothing with whitespace */
-{verb_prototype}		{yylval.str = strdup(yytext); return VERB;}
-{noun_prototype}		{yylval.str = strdup(yytext); return NOUN;}
+{verb}		{yylval.str = strdup(yytext); return VERB;}
+{noun}		{yylval.str = strdup(yytext); return NOUN;}
 {adj}		{yylval.str = strdup(yytext); return ADJ;}
 {adv}		{yylval.str = strdup(yytext); return ADV;}
 
