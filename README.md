@@ -3,7 +3,7 @@
 A "Natural language" parser demo.
 
 
-test.txt: "I am a happy rabbit"
+test.txt: "we are happy dogs"
 
 ./parser test.txt
 
