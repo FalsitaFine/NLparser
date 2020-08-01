@@ -78,7 +78,7 @@ noun : NOUN
 
 verb : VERB
 {
-	printf("Recognizing Verb %s \n", $1);
+	printf("Recognizing (Verb) %s \n", $1);
 }
 | adv verb
 {
