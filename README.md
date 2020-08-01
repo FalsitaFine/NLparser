@@ -7,20 +7,17 @@ test.txt: "I am a happy rabbit"
 
 ./parser test.txt
 
-Recognizing (Noun) Token I 
+Recognizing (Noun) Token we 
 
-Recognizing Verb am 
-
-Recognizing (Adj) Token a 
+Recognizing (Verb) are 
 
 Recognizing (Adj) Token happy 
 
-Recognizing (Noun) Token rabbit 
+Recognizing (Noun) Token dogs 
 
-Recognize (Adj)happy (Noun)rabbit as Noun happy rabbit
+Recognize (Adj)happy (Noun)dogs as Noun happy dogs
 
-Recognize (Adj)a (Noun)happy rabbit as Noun a happy rabbit
-
-Recognize (Noun)I (Verb)am (Noun)a happy rabbit as sentence
+Recognize (Noun)we (Verb)are (Noun)happy dogs as sentence
 
 Paragraph formed
+
