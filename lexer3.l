@@ -8,7 +8,7 @@
 letter   [A-Za-z]
 digit    [0-9]
 
-noun_prototype_0 ("we")|("rabbit")|("dog")
+noun_prototype_0 ("we")|("rabbit")|("dog")|("planetarium")
 noun_prototype_1 ("entity")|("abstraction")|("thing")|("object")|("whole")|("congener")|("organism")|("benthos")|("dwarf")|("heterotroph")|("parent")|("life")|("biont")|("cell")|("person")|("animal")
 noun_prototype_2 ("plant")|("native")|("substance")|("substance")|("matter")|("food")|("nutrient")|("artifact")|("article")|("cognition")|("motivation")|("attribute")|("state")|("feeling")|("location")|("shape")
 noun_prototype_3 ("time")|("space")|("event")|("process")|("act")|("group")|("relation")|("possession")|("communication")|("measure")|("phenomenon")|("thing")|("kindness")|("abdominoplasty")|("abort")|("accomplishment")
@@ -27,7 +27,7 @@ noun_prototype_15 ("incurring")|("moneymaking")|("annexation")|("purchase")|("re
 noun_prototype {noun_prototype_0}|{noun_prototype_1}|{noun_prototype_2}|{noun_prototype_3}|{noun_prototype_4}|{noun_prototype_5}|{noun_prototype_6}|{noun_prototype_7}|{noun_prototype_8}|{noun_prototype_9}|{noun_prototype_10}|{noun_prototype_11}|{noun_prototype_12}|{noun_prototype_13}|{noun_prototype_14}|{noun_prototype_15}
 
 
-verb_prototype_0 ("am")|("are")|("is")|("jump")
+verb_prototype_0 ("am")|("are")|("is")|("jump")|("welcome")
 verb_prototype_1 ("breathe")|("respire")|("respire")|("choke")|("hyperventilate")|("hyperventilate")|("aspirate")|("burp")|("hiccup")|("sigh")|("exhale")|("hold")|("exhale")|("sneeze")|("inhale")|("pant")
 verb_prototype_2 ("cough")|("hack")|("expectorate")|("snort")|("wheeze")|("puff")|("blow")|("insufflate")|("yawn")|("sniff")|("blink")|("palpebrate")|("bat")|("wink")|("wink")|("squint")
 verb_prototype_3 ("squint")|("wince")|("shed")|("desquamate")|("twitch")|("fibrillate")|("act")|("presume")|("vulgarize")|("optimize")|("quack")|("menace")|("make")|("swagger")|("freeze")|("wanton")
@@ -81,12 +81,14 @@ adv_14 ("hence")|("thence")|("thence")|("therefor")|("vocationally")|("beyond")|
 adv_15 ("ultimately")|("finally")|("presently")|("nowadays")|("now")|("now")|("now")|("now")|("now")|("aggressively")|("shrilly")|("steadily")|("happily")|("unhappily")|("no")|("firm")
 adv {adv_0}|{adv_1}|{adv_2}|{adv_3}|{adv_4}|{adv_5}|{adv_6}|{adv_7}|{adv_8}|{adv_9}|{adv_10}|{adv_11}|{adv_12}|{adv_13}|{adv_14}|{adv_15}
 
+prep ("to")|("on")|("at")|("in")
 
 suffix_v ("s")|("ing")
 suffix_n ("s")
+prefix ("in")|("un")
 
-verb ({verb_prototype})({suffix_v})*
-noun {noun_prototype}({suffix_n})*
+verb_morph ({verb_prototype})({suffix_v})*
+noun_morph {noun_prototype}({suffix_n})*
 
 ws       [ \t]+
 newline  "\n"
@@ -105,11 +107,13 @@ error    .
 %%
 
 {ws}            ;   /* do nothing with whitespace */
-{verb}		{yylval.str = strdup(yytext); return VERB;}
-{noun}		{yylval.str = strdup(yytext); return NOUN;}
+{verb_prototype}		{yylval.str = strdup(yytext); return VERB;}
+{noun_prototype}		{yylval.str = strdup(yytext); return NOUN;}
+{verb_morph}		{yylval.str = strdup(yytext); printf("Verb %s is recognized as a morph\n",yylval.str); return VERB;}
+{noun_morph}		{yylval.str = strdup(yytext); printf("Noun %s is recognized as a morph\n",yylval.str); return NOUN;}
 {adj}		{yylval.str = strdup(yytext); return ADJ;}
 {adv}		{yylval.str = strdup(yytext); return ADV;}
-
+{prep}		{yylval.str = strdup(yytext); return PREP;}
 
 
 {newline}       linenumber += 1;

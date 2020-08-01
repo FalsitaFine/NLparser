@@ -16,7 +16,7 @@ static int linenumber = 1;
 %token <str> VERB
 %token <str> ADJ
 %token <str> ADV
-
+%token <str> PREP
 
 %type <str> paragraph
 %type <str> sentence
@@ -24,7 +24,7 @@ static int linenumber = 1;
 %type <str> verb
 %type <str> adj
 %type <str> adv
-
+%type <str> prep
 
 %start paragraph
 
@@ -47,12 +47,18 @@ paragraph : sentence
 sentence : noun verb noun
 {
 	printf("Recognize (Noun)%s (Verb)%s (Noun)%s as sentence\n", $1, $2, $3);
+	//Sample test: we are happy dogs
+}
+|	verb noun
+{
+	printf("Recognize (Verb)%s (Noun)%s as sentence\n", $1, $2);
+	//Sample test: welcome to the planetarium
 }
 ;
 
 noun : NOUN
 {
-	printf("Recognizing (Noun) Token %s \n", $1);
+	printf("Recognizing (Noun Token) %s \n", $1);
 }
 | adj noun
 {
@@ -62,7 +68,7 @@ noun : NOUN
 	strcat(strc, $2);
 	$$ = strc;
 
-	printf("Recognize (Adj)%s (Noun)%s as Noun %s\n", $1, $2, $$);
+	printf("Recognize (Adj)%s (Noun)%s as Noun [%s]\n", $1, $2, $$);
 }
 | noun noun
 {
@@ -72,13 +78,13 @@ noun : NOUN
 	strcat(strc, $2);
 	$$ = strc;
 
-	printf("Recognize (Noun)%s (Noun)%s as Noun\n", $1, $2, $$);
+	printf("Recognize (Noun)%s (Noun)%s as Noun [%s]\n", $1, $2, $$);
 }
 ;
 
 verb : VERB
 {
-	printf("Recognizing (Verb) %s \n", $1);
+	printf("Recognizing (Verb Token) %s \n", $1);
 }
 | adv verb
 {
@@ -87,22 +93,54 @@ verb : VERB
 	strcat(strc, " ");
 	strcat(strc, $2);
 	$$ = strc;
-	printf("Recognize (Adv)%s (Verb)%s as Verb %s \n", $1, $2, $$);
+	printf("Recognize (Adv)%s (Verb)%s as Verb [%s] \n", $1, $2, $$);
+}
+| verb prep
+{
+	char * strc = (char *) malloc(2 + strlen($1)+ strlen($2) );
+	strcpy(strc, $1);
+	strcat(strc, " ");
+	strcat(strc, $2);
+	$$ = strc;
+	printf("Recognize (Verb)%s (Prep)%s as Verb [%s] \n", $1, $2, $$);
+}
+| adv prep
+{
+	char * strc = (char *) malloc(2 + strlen($1)+ strlen($2) );
+	strcpy(strc, $1);
+	strcat(strc, " ");
+	strcat(strc, $2);
+	$$ = strc;
+	printf("Recognize (Adv)%s (Prep)%s as Verb [%s] \n", $1, $2, $$);
+}
+| adj prep
+{
+	char * strc = (char *) malloc(2 + strlen($1)+ strlen($2) );
+	strcpy(strc, $1);
+	strcat(strc, " ");
+	strcat(strc, $2);
+	$$ = strc;
+	printf("Recognize (Adj)%s (Prep)%s as Verb [%s] \n", $1, $2, $$);
 }
 ;
 
 adj : ADJ
 {
-	printf("Recognizing (Adj) Token %s \n", $1);
+	printf("Recognizing (Adj Token) %s \n", $1);
 }
 ;
 
 adv : ADV
 {
-	printf("Recognizing (Adv) Token %s \n", $1);
+	printf("Recognizing (Adv Token) %s \n", $1);
 }
 ;
 
+prep : PREP
+{
+	printf("Recognizing (Prep Token) %s \n", $1);
+}
+;
 
 %%
 

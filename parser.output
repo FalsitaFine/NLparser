@@ -1,6 +1,8 @@
-State 11 conflicts: 2 shift/reduce
-State 14 conflicts: 2 shift/reduce
-State 15 conflicts: 2 shift/reduce
+State 13 conflicts: 2 shift/reduce
+State 16 conflicts: 2 shift/reduce
+State 19 conflicts: 2 shift/reduce
+State 21 conflicts: 1 shift/reduce
+State 24 conflicts: 2 shift/reduce
 
 
 Grammar
@@ -11,45 +13,54 @@ Grammar
     2          | paragraph sentence
 
     3 sentence: noun verb noun
+    4         | verb noun
 
-    4 noun: NOUN
-    5     | adj noun
-    6     | noun noun
+    5 noun: NOUN
+    6     | adj noun
+    7     | noun noun
 
-    7 verb: VERB
-    8     | adv verb
+    8 verb: VERB
+    9     | adv verb
+   10     | verb prep
+   11     | adv prep
+   12     | adj prep
 
-    9 adj: ADJ
+   13 adj: ADJ
 
-   10 adv: ADV
+   14 adv: ADV
+
+   15 prep: PREP
 
 
 Terminals, with rules where they appear
 
 $end (0) 0
 error (256)
-NOUN (258) 4
-VERB (259) 7
-ADJ (260) 9
-ADV (261) 10
+NOUN (258) 5
+VERB (259) 8
+ADJ (260) 13
+ADV (261) 14
+PREP (262) 15
 
 
 Nonterminals, with rules where they appear
 
-$accept (7)
+$accept (8)
     on left: 0
-paragraph (8)
+paragraph (9)
     on left: 1 2, on right: 0 2
-sentence (9)
-    on left: 3, on right: 1 2
-noun (10)
-    on left: 4 5 6, on right: 3 5 6
-verb (11)
-    on left: 7 8, on right: 3 8
-adj (12)
-    on left: 9, on right: 5
-adv (13)
-    on left: 10, on right: 8
+sentence (10)
+    on left: 3 4, on right: 1 2
+noun (11)
+    on left: 5 6 7, on right: 3 4 6 7
+verb (12)
+    on left: 8 9 10 11 12, on right: 3 4 9 10
+adj (13)
+    on left: 13, on right: 6 12
+adv (14)
+    on left: 14, on right: 9 11
+prep (15)
+    on left: 15, on right: 10 11 12
 
 
 State 0
@@ -57,176 +68,279 @@ State 0
     0 $accept: . paragraph $end
 
     NOUN  shift, and go to state 1
-    ADJ   shift, and go to state 2
+    VERB  shift, and go to state 2
+    ADJ   shift, and go to state 3
+    ADV   shift, and go to state 4
 
-    paragraph  go to state 3
-    sentence   go to state 4
-    noun       go to state 5
-    adj        go to state 6
+    paragraph  go to state 5
+    sentence   go to state 6
+    noun       go to state 7
+    verb       go to state 8
+    adj        go to state 9
+    adv        go to state 10
 
 
 State 1
 
-    4 noun: NOUN .
+    5 noun: NOUN .
 
-    $default  reduce using rule 4 (noun)
+    $default  reduce using rule 5 (noun)
 
 
 State 2
 
-    9 adj: ADJ .
+    8 verb: VERB .
 
-    $default  reduce using rule 9 (adj)
+    $default  reduce using rule 8 (verb)
 
 
 State 3
 
-    0 $accept: paragraph . $end
-    2 paragraph: paragraph . sentence
+   13 adj: ADJ .
 
-    $end  shift, and go to state 7
-    NOUN  shift, and go to state 1
-    ADJ   shift, and go to state 2
-
-    sentence  go to state 8
-    noun      go to state 5
-    adj       go to state 6
+    $default  reduce using rule 13 (adj)
 
 
 State 4
+
+   14 adv: ADV .
+
+    $default  reduce using rule 14 (adv)
+
+
+State 5
+
+    0 $accept: paragraph . $end
+    2 paragraph: paragraph . sentence
+
+    $end  shift, and go to state 11
+    NOUN  shift, and go to state 1
+    VERB  shift, and go to state 2
+    ADJ   shift, and go to state 3
+    ADV   shift, and go to state 4
+
+    sentence  go to state 12
+    noun      go to state 7
+    verb      go to state 8
+    adj       go to state 9
+    adv       go to state 10
+
+
+State 6
 
     1 paragraph: sentence .
 
     $default  reduce using rule 1 (paragraph)
 
 
-State 5
+State 7
 
     3 sentence: noun . verb noun
-    6 noun: noun . noun
+    7 noun: noun . noun
 
     NOUN  shift, and go to state 1
-    VERB  shift, and go to state 9
-    ADJ   shift, and go to state 2
-    ADV   shift, and go to state 10
+    VERB  shift, and go to state 2
+    ADJ   shift, and go to state 3
+    ADV   shift, and go to state 4
 
-    noun  go to state 11
-    verb  go to state 12
-    adj   go to state 6
-    adv   go to state 13
+    noun  go to state 13
+    verb  go to state 14
+    adj   go to state 9
+    adv   go to state 10
 
 
-State 6
+State 8
 
-    5 noun: adj . noun
+    4 sentence: verb . noun
+   10 verb: verb . prep
 
     NOUN  shift, and go to state 1
-    ADJ   shift, and go to state 2
+    ADJ   shift, and go to state 3
+    PREP  shift, and go to state 15
 
-    noun  go to state 14
-    adj   go to state 6
+    noun  go to state 16
+    adj   go to state 17
+    prep  go to state 18
 
 
-State 7
+State 9
+
+    6 noun: adj . noun
+   12 verb: adj . prep
+
+    NOUN  shift, and go to state 1
+    ADJ   shift, and go to state 3
+    PREP  shift, and go to state 15
+
+    noun  go to state 19
+    adj   go to state 17
+    prep  go to state 20
+
+
+State 10
+
+    9 verb: adv . verb
+   11     | adv . prep
+
+    VERB  shift, and go to state 2
+    ADJ   shift, and go to state 3
+    ADV   shift, and go to state 4
+    PREP  shift, and go to state 15
+
+    verb  go to state 21
+    adj   go to state 22
+    adv   go to state 10
+    prep  go to state 23
+
+
+State 11
 
     0 $accept: paragraph $end .
 
     $default  accept
 
 
-State 8
+State 12
 
     2 paragraph: paragraph sentence .
 
     $default  reduce using rule 2 (paragraph)
 
 
-State 9
+State 13
 
-    7 verb: VERB .
-
-    $default  reduce using rule 7 (verb)
-
-
-State 10
-
-   10 adv: ADV .
-
-    $default  reduce using rule 10 (adv)
-
-
-State 11
-
-    6 noun: noun . noun
-    6     | noun noun .
+    7 noun: noun . noun
+    7     | noun noun .
 
     NOUN  shift, and go to state 1
-    ADJ   shift, and go to state 2
+    ADJ   shift, and go to state 3
+
+    NOUN      [reduce using rule 7 (noun)]
+    ADJ       [reduce using rule 7 (noun)]
+    $default  reduce using rule 7 (noun)
+
+    noun  go to state 13
+    adj   go to state 17
+
+
+State 14
+
+    3 sentence: noun verb . noun
+   10 verb: verb . prep
+
+    NOUN  shift, and go to state 1
+    ADJ   shift, and go to state 3
+    PREP  shift, and go to state 15
+
+    noun  go to state 24
+    adj   go to state 17
+    prep  go to state 18
+
+
+State 15
+
+   15 prep: PREP .
+
+    $default  reduce using rule 15 (prep)
+
+
+State 16
+
+    4 sentence: verb noun .
+    7 noun: noun . noun
+
+    NOUN  shift, and go to state 1
+    ADJ   shift, and go to state 3
+
+    NOUN      [reduce using rule 4 (sentence)]
+    ADJ       [reduce using rule 4 (sentence)]
+    $default  reduce using rule 4 (sentence)
+
+    noun  go to state 13
+    adj   go to state 17
+
+
+State 17
+
+    6 noun: adj . noun
+
+    NOUN  shift, and go to state 1
+    ADJ   shift, and go to state 3
+
+    noun  go to state 19
+    adj   go to state 17
+
+
+State 18
+
+   10 verb: verb prep .
+
+    $default  reduce using rule 10 (verb)
+
+
+State 19
+
+    6 noun: adj noun .
+    7     | noun . noun
+
+    NOUN  shift, and go to state 1
+    ADJ   shift, and go to state 3
 
     NOUN      [reduce using rule 6 (noun)]
     ADJ       [reduce using rule 6 (noun)]
     $default  reduce using rule 6 (noun)
 
-    noun  go to state 11
-    adj   go to state 6
+    noun  go to state 13
+    adj   go to state 17
 
 
-State 12
+State 20
 
-    3 sentence: noun verb . noun
+   12 verb: adj prep .
 
-    NOUN  shift, and go to state 1
-    ADJ   shift, and go to state 2
-
-    noun  go to state 15
-    adj   go to state 6
+    $default  reduce using rule 12 (verb)
 
 
-State 13
+State 21
 
-    8 verb: adv . verb
+    9 verb: adv verb .
+   10     | verb . prep
 
-    VERB  shift, and go to state 9
-    ADV   shift, and go to state 10
+    PREP  shift, and go to state 15
 
-    verb  go to state 16
-    adv   go to state 13
+    PREP      [reduce using rule 9 (verb)]
+    $default  reduce using rule 9 (verb)
 
-
-State 14
-
-    5 noun: adj noun .
-    6     | noun . noun
-
-    NOUN  shift, and go to state 1
-    ADJ   shift, and go to state 2
-
-    NOUN      [reduce using rule 5 (noun)]
-    ADJ       [reduce using rule 5 (noun)]
-    $default  reduce using rule 5 (noun)
-
-    noun  go to state 11
-    adj   go to state 6
+    prep  go to state 18
 
 
-State 15
+State 22
+
+   12 verb: adj . prep
+
+    PREP  shift, and go to state 15
+
+    prep  go to state 20
+
+
+State 23
+
+   11 verb: adv prep .
+
+    $default  reduce using rule 11 (verb)
+
+
+State 24
 
     3 sentence: noun verb noun .
-    6 noun: noun . noun
+    7 noun: noun . noun
 
     NOUN  shift, and go to state 1
-    ADJ   shift, and go to state 2
+    ADJ   shift, and go to state 3
 
     NOUN      [reduce using rule 3 (sentence)]
     ADJ       [reduce using rule 3 (sentence)]
     $default  reduce using rule 3 (sentence)
 
-    noun  go to state 11
-    adj   go to state 6
-
-
-State 16
-
-    8 verb: adv verb .
-
-    $default  reduce using rule 8 (verb)
+    noun  go to state 13
+    adj   go to state 17
